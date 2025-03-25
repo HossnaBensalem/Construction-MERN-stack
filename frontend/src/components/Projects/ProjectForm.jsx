@@ -7,7 +7,7 @@ import * as Yup from "yup";
 
 const ProjectForm = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
 
   const initialValues = {
     projectName: "",
@@ -56,26 +56,27 @@ const ProjectForm = () => {
   };
 
   return (
-    <div className="h-screen w-full flex flex-col bg-gray-100">
-      <div className="flex-grow p-10">
-        <h2 className="text-3xl font-semibold mb-6 text-center">Add New Project</h2>
+    <div className="w-full flex flex-col bg-gray-100 min-h-screen p-4">
+      <div className="flex-grow max-w-4xl mx-auto w-full">
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-6 text-center">{id ? "Edit Project" : "Add New Project"}</h2>
 
         <Formik
           initialValues={project}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
+          enableReinitialize
         >
           {() => (
-            <Form className="space-y-4 bg-white p-8 rounded-lg border border-blue-500 shadow-md">
+            <Form className="space-y-4 bg-white p-4 sm:p-8 rounded-lg border border-blue-500 shadow-md">
               <div>
                 <label className="block font-medium">Project Name</label>
                 <Field
                   type="text"
                   name="projectName"
-                  className="w-full p-3 border border-blue-300 rounded-lg"
+                  className="w-full p-2 sm:p-3 border border-blue-300 rounded-lg"
                   required
                 />
-                <ErrorMessage name="projectName" component="div" className="text-red-600" />
+                <ErrorMessage name="projectName" component="div" className="text-red-600 text-sm" />
               </div>
 
               <div>
@@ -83,32 +84,32 @@ const ProjectForm = () => {
                 <Field
                   as="textarea"
                   name="description"
-                  className="w-full p-3 border border-blue-300 rounded-lg"
+                  className="w-full p-2 sm:p-3 border border-blue-300 rounded-lg"
                   required
                 />
-                <ErrorMessage name="description" component="div" className="text-red-600" />
+                <ErrorMessage name="description" component="div" className="text-red-600 text-sm" />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block font-medium">Start Date</label>
                   <Field
                     type="date"
                     name="startDate"
-                    className="w-full p-3 border border-blue-300 rounded-lg"
+                    className="w-full p-2 sm:p-3 border border-blue-300 rounded-lg"
                     required
                   />
-                  <ErrorMessage name="startDate" component="div" className="text-red-600" />
+                  <ErrorMessage name="startDate" component="div" className="text-red-600 text-sm" />
                 </div>
                 <div>
                   <label className="block font-medium">End Date</label>
                   <Field
                     type="date"
                     name="endDate"
-                    className="w-full p-3 border border-blue-300 rounded-lg"
+                    className="w-full p-2 sm:p-3 border border-blue-300 rounded-lg"
                     required
                   />
-                  <ErrorMessage name="endDate" component="div" className="text-red-600" />
+                  <ErrorMessage name="endDate" component="div" className="text-red-600 text-sm" />
                 </div>
               </div>
 
@@ -117,17 +118,17 @@ const ProjectForm = () => {
                 <Field
                   type="number"
                   name="budget"
-                  className="w-full p-3 border border-blue-300 rounded-lg"
+                  className="w-full p-2 sm:p-3 border border-blue-300 rounded-lg"
                   required
                 />
-                <ErrorMessage name="budget" component="div" className="text-red-600" />
+                <ErrorMessage name="budget" component="div" className="text-red-600 text-sm" />
               </div>
 
-              <div className="flex justify-between">
-                <Link to="/project">
+              <div className="flex flex-col sm:flex-row justify-between gap-3">
+                <Link to="/project" className="order-2 sm:order-1">
                   <button
                     type="button"
-                    className="px-4 py-2 bg-gray-400 text-white rounded"
+                    className="w-full px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500 transition"
                   >
                     Cancel
                   </button>
@@ -135,9 +136,9 @@ const ProjectForm = () => {
 
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                  className="w-full sm:w-auto px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition order-1 sm:order-2"
                 >
-                  Save Project
+                  {id ? "Update Project" : "Save Project"}
                 </button>
               </div>
             </Form>

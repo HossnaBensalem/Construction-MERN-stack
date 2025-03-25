@@ -4,6 +4,8 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 
 import projectRoutes from './routes/projectRoutes.js '
+import taskRoutes from './routes/taskRoutes.js '
+import resourceRoutes from './routes/resourceRoutes.js'
 
 const PORT = 3000
 
@@ -15,9 +17,13 @@ app.use(bodyParser.json());
 
 
 app.use('/api', projectRoutes);
+app.use('/api', taskRoutes);
+app.use('/api', resourceRoutes);
 
 
-await mongoose.connect('mongodb://127.0.0.1:27017/mern').then(()=>{
+
+
+await mongoose.connect('mongodb://127.0.0.1:27017/construction').then(()=>{
 
     console.log('✅ DB connect successfully')
 }).catch((error)=> {

@@ -1,5 +1,8 @@
-import Project from '../models/Project.js'
-// Créer un projet
+import Project from '../models/Project.js';
+import Task from '../models/Task.js';
+import Resource from '../models/Resource.js'; // Import the Resource model
+
+// Create a project
 const createProject = async (req, res) => {
   try {
     const project = new Project(req.body);
@@ -10,7 +13,7 @@ const createProject = async (req, res) => {
   }
 };
 
-// Récupérer tous les projets
+// Get all projects
 const getProjects = async (req, res) => {
   try {
     const projects = await Project.find();
@@ -20,44 +23,59 @@ const getProjects = async (req, res) => {
   }
 };
 
-// Récupérer un Project par ID
+// Get a project by ID
 const getProjectById = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
     console.log(project);
-    if (!project) return res.status(404).json({ message: 'Project non trouvée' });
+    if (!project) return res.status(404).json({ message: 'Project not found' });
     res.json(project);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-
-// Mettre à jour  Project
+// Update a project
 const updateProject = async (req, res) => {
   try {
     const project = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!project) return res.status(404).json({ message: 'Project non trouvée' });
+    if (!project) return res.status(404).json({ message: 'Project not found' });
     res.json(project);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-
-// Supprimer  Project
+// Delete a project and its associated tasks and resources
 const deleteProject = async (req, res) => {
   try {
-    console.log("Hello Delete");
-    const project = await Project.findByIdAndDelete(req.params.id);
-    console.log(project);
-    if (!project) return res.status(404).json({ message: 'Project non trouvée' });
-    res.json({ message: 'Project supprimée avec succès' });
+    const projectId = req.params.id;
+
+    // 1. First delete all tasks associated with this project
+    await Task.deleteMany({ project: projectId });
+    
+    // 2. Delete all resources associated with this project
+    await Resource.deleteMany({ project: projectId });
+    
+    // 3. Then delete the project itself
+    const project = await Project.findByIdAndDelete(projectId);
+    
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+    
+    res.json({ 
+      message: 'Project, its associated tasks, and resources deleted successfully' 
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-
-
-export default {getProjects, createProject,updateProject,deleteProject,getProjectById};
+export default {
+  getProjects,
+  createProject,
+  updateProject,
+  deleteProject,
+  getProjectById
+};
