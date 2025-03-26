@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout/Layout";
 import ProjectForm from './components/Projects/ProjectForm';
 import Projects from "./components/Projects/Projects";
@@ -10,6 +11,23 @@ import TaskForm from './components/Tasks/TaskForm';
 
 function App() {
   return (
+
+    <>
+    <Toaster
+      position="top-center"
+      toastOptions={{
+        duration: 6000,
+        style: {
+          background: "white",
+          color: "black",
+          fontSize: "18px",
+          padding: "16px",
+          width: "400px",
+          borderRadius: "10px",
+          border: "2px solid #FFA500", // Orange
+        },
+      }}
+    />
     <Router>
       <Layout>
         <Routes>
@@ -25,6 +43,7 @@ function App() {
         </Routes>
       </Layout>
     </Router>
+    </>
   );
 }
 
