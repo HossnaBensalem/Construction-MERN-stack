@@ -16,7 +16,7 @@ function App() {
     <Toaster
       position="top-center"
       toastOptions={{
-        duration: 6000,
+        duration: 4000,
         style: {
           background: "white",
           color: "black",
@@ -24,7 +24,7 @@ function App() {
           padding: "16px",
           width: "400px",
           borderRadius: "10px",
-          border: "2px solid #FFA500", // Orange
+          border: "2px solid ", 
         },
       }}
     />

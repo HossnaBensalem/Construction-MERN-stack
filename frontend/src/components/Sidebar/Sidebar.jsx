@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Sidebar = ({ isOpen, toggleSidebar, isMobile = false }) => {
   return (
     <div className="sidebar-container">
-      {/* خلفية داكنة تظهر خلف القائمة الجانبية في وضع الهاتف المحمول */}
+   
       {isMobile && isOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-30"
@@ -13,7 +13,7 @@ const Sidebar = ({ isOpen, toggleSidebar, isMobile = false }) => {
         ></div>
       )}
       
-      {/* القائمة الجانبية */}
+   
       <div 
         className={`fixed top-0 left-0 h-full bg-blue-800 text-white w-64 transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"

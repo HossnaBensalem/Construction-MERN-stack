@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -21,15 +21,37 @@ const Projects = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this project and all its associated tasks and resources?")) {
-      try {
-        await axios.delete(`http://127.0.0.1:3000/api/projects/${id}`);
-        setProjects(projects.filter((project) => project._id !== id));
-        toast.success("Project, its tasks, and resources deleted successfully");
-      } catch (error) {
-        toast.error("Error deleting project");
-        console.error("Error deleting project:", error.response?.data || error.message);
+    const confirmDelete = () => {
+      toast.dismiss();
+      confirmDeleteProject(id);
+    };
+
+    toast(
+      <div>
+        <p>Are you sure you want to delete this project and all its associated tasks and resources?</p>
+        <div className="flex justify-between mt-2">
+          <button 
+            onClick={confirmDelete}
+            className="bg-blue-600 text-white px-3 py-1 rounded mr-2"
+          >
+            OK
+          </button>
+        </div>
+      </div>,
+      {
+        duration: Infinity
       }
+    );
+  };
+
+  const confirmDeleteProject = async (id) => {
+    try {
+      await axios.delete(`http://127.0.0.1:3000/api/projects/${id}`);
+      setProjects(projects.filter((project) => project._id !== id));
+      toast.success("Project, its tasks, and resources deleted successfully");
+    } catch (error) {
+      toast.error("Error deleting project");
+      console.error("Error deleting project:", error.response?.data || error.message);
     }
   };
 
