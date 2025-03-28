@@ -2,6 +2,8 @@ import React from "react";
 import { Home, CheckCircle, Settings, LogOut, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
+// Composant Sidebar qui affiché un menu de navigation
+
 const Sidebar = ({ isOpen, toggleSidebar, isMobile = false }) => {
   return (
     <div className="sidebar-container">

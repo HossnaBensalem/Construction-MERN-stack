@@ -1,6 +1,6 @@
 import Project from '../models/Project.js';
 import Task from '../models/Task.js';
-import Resource from '../models/Resource.js'; // Import the Resource model
+import Resource from '../models/Resource.js'; 
 
 // Create a project
 const createProject = async (req, res) => {

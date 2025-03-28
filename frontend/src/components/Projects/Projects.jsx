@@ -6,6 +6,10 @@ import toast from "react-hot-toast";
 const Projects = () => {
   const [projects, setProjects] = useState([]);
 
+ 
+
+
+
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -56,6 +60,7 @@ const Projects = () => {
   };
 
   return (
+  
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 mt-10">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4 sm:mb-0">Projects</h2>
@@ -124,6 +129,7 @@ const Projects = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 

@@ -2,42 +2,51 @@ import { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import { Menu } from "lucide-react";
 
+
 function Layout({ children }) {
-  // تغيير الحالة الافتراضية إلى true لجعل القائمة الجانبية مفتوحة عند بدء التشغيل
+
+  //  ouverte ou non
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  // pour  appareil mobile 
   const [isMobile, setIsMobile] = useState(false);
 
-  // التحقق من حجم الشاشة وتعديل حالة القائمة الجانبية
+  // vérifier la taille de l'écran
   useEffect(() => {
     const checkScreenSize = () => {
+      //  largeur  considère  appareil mobile
       setIsMobile(window.innerWidth < 768);
-      // إغلاق القائمة تلقائيًا في وضع الهاتف المحمول
+
+      //  fermée par défaut
       if (window.innerWidth < 768) {
         setSidebarOpen(false);
       } else {
+        // est ouverte
         setSidebarOpen(true);
       }
     };
 
-    // التحقق عند التحميل
+    // vérifier la taille de l'écran 
     checkScreenSize();
     
-    // الاستماع لتغييرات حجم النافذة
     window.addEventListener('resize', checkScreenSize);
-    
-    // تنظيف عند تفكيك المكون
+
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
+  // Fonction pour basculer l'état de la barre latérale (ouverte ou fermée)
   const toggleSidebar = (value) => {
+
     setSidebarOpen(typeof value === "boolean" ? value : !sidebarOpen);
   };
 
   return (
     <div className="app-layout relative">
+     
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} isMobile={isMobile} />
 
       <div className={`transition-all duration-300 ${sidebarOpen && !isMobile ? "md:ml-64" : "ml-0"}`}>
+     
         {!sidebarOpen && (
           <button 
             className="sidebar-toggle bg-blue-600 text-white p-2 rounded-md shadow-md m-4 flex items-center justify-center z-50" 
@@ -47,6 +56,7 @@ function Layout({ children }) {
           </button>
         )}
 
+      
         <main 
           className={`main-content ${isMobile && sidebarOpen ? "opacity-50" : "opacity-100"}`} 
           onClick={() => isMobile && sidebarOpen && toggleSidebar(false)}
